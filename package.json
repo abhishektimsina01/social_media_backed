@@ -5,10 +5,21 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev" : "nodemon index.js",
-    "start" : "node index.js",
+    "dev": "nodemon index.js",
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "cloudinary": "^2.9.0",
+    "cookie": "^1.1.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.6",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.2.1",
+    "multer": "^2.0.2",
+    "nodemailer": "^8.0.1",
+    "socket.io": "^4.8.3"
+  }
 }
