@@ -1,0 +1,4 @@
+// id
+// post_id
+// user_id
+// reaction
