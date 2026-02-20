@@ -12,17 +12,11 @@ const notFound = (req: Request, res : Response, next : NextFunction) => {
     }
 }
 
-const errorHandler = (err : Error | ApiError, req : Request, res : Response, next : NextFunction) => {
-    if(err instanceof Error){
-        res.json({
-            message : err.message,
-            status : 404
-        })
-    }
-    else{
+const errorHandler = (err : any, req : Request, res : Response, next : NextFunction) => {
         res.json({
             message : err.message,
             status : err.status
         })
-    }
 }
+
+export {notFound, errorHandler}

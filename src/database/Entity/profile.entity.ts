@@ -13,15 +13,17 @@ class Profiles{
     @Column({type : "varchar", length : 15})
     username !: string
 
-    @Column()
+    @Column({type : "varchar", length : 30})
     password !: string
 
-    @Column()
+    @Column({type : "varchar", length : 100})
     gmail !: string
+
+    @Column({type : "varchar", enum : ["user", "admin", "superadmin"] , length : 11})
+    role !: string
 
     @CreateDateColumn()
     created_at !: Date
-
 }
 
 export default Profiles

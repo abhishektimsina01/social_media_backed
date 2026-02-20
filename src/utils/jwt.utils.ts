@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 import { fetch } from "./env.utils.js"
 dotenv.config()
 
-const sign = (data : any) => {
+const sign = (data : {id : number, gmail : string}) => {
     console.log(data)
     const secret_key = fetch('secret_key')
     if(!secret_key){

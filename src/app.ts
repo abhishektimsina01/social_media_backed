@@ -4,6 +4,8 @@ import {Server} from "socket.io"
 import dotenv from "dotenv"
 import cookieParser from "cookie-parser"
 import {Application } from "express"
+import { authRouter } from "./routes/auth.routes.js"
+
 
 dotenv.config()
 
@@ -27,7 +29,7 @@ app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 
-// app.use("/api/auth", )
+app.use("/api/auth", authRouter)
 // app.use("/api/profile")
 // app.use("/api/post")
 // app.use("/api/comment")

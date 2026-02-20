@@ -1,9 +1,9 @@
 import { NextFunction, Request, Response } from "express"
 import { ApiError } from "../interface/error.interface.js"
 
-const authorization = (roles : string[]) => {
+const authorization = (...roles : string[]) => {
     return (req : Request, res : Response, next : NextFunction)=>{
-        if(roles.includes(req.user)){
+        if(roles.includes("all") || roles.includes("user")){
             next()
         }
         else{

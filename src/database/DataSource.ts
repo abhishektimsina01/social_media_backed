@@ -12,7 +12,7 @@ const AppDataSource = new DataSource({
     database : "social_media",
     synchronize : true,
     // logging : true,
-    entities : []
+    entities : [Profiles]
 })
 
 export {AppDataSource}
