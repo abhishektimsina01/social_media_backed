@@ -19,7 +19,7 @@ class Profiles{
     @Column({type : "varchar", length : 100})
     gmail !: string
 
-    @Column({type : "varchar", enum : ["user", "admin", "superadmin"] , length : 11})
+    @Column({type : "enum", enum : ["user", "admin", "superadmin"], default : "user"})
     role !: string
 
     @CreateDateColumn()

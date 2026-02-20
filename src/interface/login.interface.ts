@@ -1,4 +1,4 @@
-interface login{
+interface logIn{
     gmail : string
     password : string
 }
@@ -10,4 +10,4 @@ interface signUp{
     username : string
 }
 
-export {login, signUp}
+export {logIn, signUp}
