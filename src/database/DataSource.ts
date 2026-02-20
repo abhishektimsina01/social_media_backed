@@ -2,6 +2,7 @@ import "reflect-metadata"
 import {DataSource} from "typeorm"
 import Profiles from "./Entity/profile.entity.js"
 
+
 const AppDataSource = new DataSource({
     type : "mysql",
     username : "root",
@@ -10,7 +11,7 @@ const AppDataSource = new DataSource({
     host : "localhost",
     database : "social_media",
     synchronize : true,
-    logging : true,
+    // logging : true,
     entities : []
 })
 

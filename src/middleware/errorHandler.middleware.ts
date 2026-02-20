@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { ApiError } from "../interface/Error.interface.js";
+import { ApiError } from "../interface/error.interface.js";
 
 const notFound = (req: Request, res : Response, next : NextFunction) => {
     try{
@@ -20,6 +20,9 @@ const errorHandler = (err : Error | ApiError, req : Request, res : Response, nex
         })
     }
     else{
-        res.
+        res.json({
+            message : err.message,
+            status : err.status
+        })
     }
 }
