@@ -1,4 +1,5 @@
-import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import {Column, CreateDateColumn, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Post } from "./post.entity.js";
 
 
 @Entity()
@@ -7,13 +8,13 @@ class Profiles{
     @PrimaryGeneratedColumn()
     user_id !: number
 
-    @Column({type : "varchar", length : 15})
+    @Column({type : "varchar", length : 100})
     name !: string
 
-    @Column({type : "varchar", length : 15})
+    @Column({type : "varchar", length : 100})
     username !: string
 
-    @Column({type : "varchar", length : 30})
+    @Column({type : "varchar", length : 100})
     password !: string
 
     @Column({type : "varchar", length : 100})
@@ -22,16 +23,14 @@ class Profiles{
     @Column({type : "enum", enum : ["user", "admin", "superadmin"], default : "user"})
     role !: string
 
+    @OneToMany(() => Post, (post) => post.user)
+    posts !: Post[]
+
+    @ManyToMany(() =>  Post, (post)=> post.profiles)
+    tagged_post !: Post[]
+
     @CreateDateColumn()
     created_at !: Date
 }
 
 export default Profiles
-
-// user_id
-// username
-// password
-// prfile photo
-// bio
-// gmail
-// created_at

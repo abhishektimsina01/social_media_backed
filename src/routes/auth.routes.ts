@@ -5,6 +5,6 @@ import { authorization } from "../middleware/authorization.js"
 
 export const authRouter = express.Router()
 
-authRouter.post("/login", authentication, authorization("all"), authLogin)
-authRouter.post("/signin",authentication, authorization("all"), authSigniUp)
-authRouter.get("/logout", authorization("user", "admin", "superadmin"), authLogout)
+authRouter.post("/login", authLogin)
+authRouter.post("/signup", authSigniUp)
+authRouter.get("/logout",authentication, authorization("all", "user", "admin", "superadmin"), authLogout)

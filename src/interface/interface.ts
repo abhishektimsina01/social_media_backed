@@ -10,4 +10,12 @@ interface signUp{
     username : string
 }
 
-export {logIn, signUp}
+interface post{
+    content ?: string,
+    media ?: string,
+    feeling ?: string,
+    privacy ?: string
+    tagged ?: number[]
+}
+
+export {logIn, signUp, post}

@@ -6,6 +6,7 @@ dotenv.config()
 const sign = (data : {id : number, gmail : string}) => {
     console.log(data)
     const secret_key = fetch('secret_key')
+    console.log(secret_key)
     if(!secret_key){
         const error = new Error("Secret key not found")
         return error

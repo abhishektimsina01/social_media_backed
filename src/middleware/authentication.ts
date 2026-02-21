@@ -8,6 +8,7 @@ const authentication = async(req : Request, res : Response, next : NextFunction)
             const err = new Error("no token found")
             throw err
         }
+        console.log("auth")
         // yedi token paiyo vhane, then verify the token
         const data = verify(token)
         if(data instanceof Error){

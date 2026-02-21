@@ -1,12 +1,14 @@
 import { NextFunction, Request, Response } from "express";
-import { logIn, signUp } from "../interface/login.interface.js";
+import { logIn, signUp } from "../interface/interface.js";
 import { authLoginService, authSignUpService } from "../services/auth.service.js";
 
 
 const authLogin = async(req : Request, res : Response, next : NextFunction) => {
     try{
         const data : logIn = req.body
+        console.log(data)
         const {token} = await authLoginService(data)
+        console.log("token is", token)
          res.cookie("accessToken", token, {
                 httpOnly : true,
                 secure : true,
@@ -39,6 +41,7 @@ const authSigniUp = async(req : Request, res : Response, next :NextFunction) => 
         })
     }
     catch(err){
+        console.log(err)
         next(err)
     }
 }
@@ -46,6 +49,7 @@ const authSigniUp = async(req : Request, res : Response, next :NextFunction) => 
 const authLogout = async(req : Request, res : Response, next : NextFunction) => {
     try{
         //for logout we need to find the token
+        console.log(req.cookies)
         const token = req.cookies.accessToken
         console.log(token)
         res.clearCookie("accessToken").json({
@@ -55,7 +59,6 @@ const authLogout = async(req : Request, res : Response, next : NextFunction) => 
         })
     }
     catch(err){
-
         next(err)
     }
 }
