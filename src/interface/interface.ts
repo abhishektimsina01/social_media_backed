@@ -1,3 +1,4 @@
+
 interface logIn{
     gmail : string
     password : string
@@ -17,5 +18,12 @@ interface post{
     privacy ?: string
     tagged ?: number[]
 }
+
+interface User{
+    id : number,
+    gmail : string,
+    role : string
+}
+
 
 export {logIn, signUp, post}

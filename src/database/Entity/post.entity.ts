@@ -21,7 +21,7 @@ class Post{
     media !: string
 
     @ManyToOne(()=>Profiles, (profile) => profile.posts)
-    @JoinColumn({name : "user_id"})
+    @JoinColumn()
     user !: Profiles
 
     @ManyToMany(() => Profiles, (profile) => profile.tagged_post)

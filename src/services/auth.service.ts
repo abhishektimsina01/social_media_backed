@@ -35,7 +35,7 @@ export const authLoginService = async(data : logIn) => {
             throw err
         }
         //now as the user is authenitcated, we sent the jwt to user with cookie
-        const token = sign({id : user.user_id, gmail : user.gmail})
+        const token = sign({id : user.user_id, gmail : user.gmail, role : user.role})
         console.log(token)
         return {token : token}
     }

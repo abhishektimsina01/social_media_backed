@@ -3,7 +3,7 @@ import dotenv from "dotenv"
 import { fetch } from "./env.utils.js"
 dotenv.config()
 
-const sign = (data : {id : number, gmail : string}) => {
+const sign = (data : {id : number, gmail : string, role : string}) => {
     console.log(data)
     const secret_key = fetch('secret_key')
     console.log(secret_key)
@@ -19,14 +19,13 @@ const sign = (data : {id : number, gmail : string}) => {
 const verify = (token : string) => {
     // there can be various kind of error like, exipre, invalid or notfound
     try{
-        console.log(token)
         const secret_key = fetch('secret_key')
         if(!secret_key){
             const error = new Error("Secret key not found")
             return error
         }
         const data = jwt.verify(token, secret_key)
-        console.log(data)
+        console.log("the token data is", data)
         return data
     }
     catch(err){

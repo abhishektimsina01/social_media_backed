@@ -7,6 +7,7 @@ import {Application } from "express"
 import { authRouter } from "./routes/auth.routes.js"
 import { errorHandler, notFound } from "./middleware/errorHandler.middleware.js"
 import { postRouter } from "./routes/post.route.js"
+import { profileRouter } from "./routes/user.route.js"
 
 
 dotenv.config()
@@ -32,7 +33,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended : true}))
 
 app.use("/api/auth", authRouter)
-// app.use("/api/profile")
+app.use("/api/profile", profileRouter)
 app.use("/api/post", postRouter)
 // app.use("/api/comment")
 // app.use("/api/post")

@@ -14,7 +14,7 @@ class Profiles{
     @Column({type : "varchar", length : 100})
     username !: string
 
-    @Column({type : "varchar", length : 100})
+    @Column({type : "varchar", length : 100, select : false})
     password !: string
 
     @Column({type : "varchar", length : 100})

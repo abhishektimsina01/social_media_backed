@@ -7,4 +7,4 @@ export const authRouter = express.Router()
 
 authRouter.post("/login", authLogin)
 authRouter.post("/signup", authSigniUp)
-authRouter.get("/logout",authentication, authorization("all", "user", "admin", "superadmin"), authLogout)
+authRouter.get("/logout", authentication, authorization("user", "admin", "superadmin"), authLogout)

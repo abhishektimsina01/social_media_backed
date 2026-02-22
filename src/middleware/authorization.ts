@@ -3,8 +3,12 @@ import { ApiError } from "../interface/error.interface.js"
 
 const authorization = (...roles : string[]) => {
     return (req : Request, res : Response, next : NextFunction)=>{
-        if(roles.includes("all") || roles.includes("user")){
-            next()
+        console.log("authorization started")
+        console.log(roles)
+        console.log(req.user.role)
+        if(roles.includes("all") || roles.includes(req.user.role)){
+            console.log("authorization finished")
+            return next()
         }
         else{
             const err : ApiError = {
@@ -12,7 +16,7 @@ const authorization = (...roles : string[]) => {
                 message : `Unauthorized to ${req.originalUrl}`,
                 status : 402
             }
-            next(err)
+            return next(err)
         }
     }
 }
