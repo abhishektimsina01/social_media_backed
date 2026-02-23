@@ -16,10 +16,10 @@ export const getProfileService = async(data : {id : number, gmail : string, role
                 posts :{
                     post_id : true,
                     content : true,
-                    profiles : {
-                        user_id : true,
-                        username : true
-                    }
+                    // profiles : {
+                    //     user_id : true,
+                    //     username : true
+                    // }
                 }, 
                 tagged_post : {
                     post_id : true,
@@ -42,4 +42,8 @@ export const getProfileService = async(data : {id : number, gmail : string, role
     catch(err){
         throw err
     }
+}
+
+export const deletePost = () => {
+
 }

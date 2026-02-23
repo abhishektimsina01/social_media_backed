@@ -12,7 +12,7 @@ const sign = (data : {id : number, gmail : string, role : string}) => {
         return error
     }
     const token = jwt.sign(data, secret_key, {expiresIn : "1d"})
-    console.log(token)
+    console.log("the token is", token)
     return token
 }
 
