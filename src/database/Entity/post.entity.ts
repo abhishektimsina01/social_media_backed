@@ -20,7 +20,7 @@ class Post{
     @Column({type : "varchar", default : null})
     media !: string
 
-    @ManyToOne(()=>Profiles, (profile) => profile.posts)
+    @ManyToOne(()=>Profiles, (profile) => profile.posts, {onDelete : "CASCADE"})
     @JoinColumn()
     user !: Profiles
 

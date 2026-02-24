@@ -1,19 +1,16 @@
-// deactivate
-// edit
-// follows
-// own post
+// deactivate option both my the user and the admin is allowed
+// edit own credentials
+// follows (i follow or unfollow)
+// own post (see own post)
 // pages followed
-
+// comments made by myself
 import { NextFunction, Request } from "express";
 import { getProfileService } from "../services/profile.service.js";
 
-
-// comments made
 export const getProfile = async(req : Request, res : Response, next : NextFunction) => {
     try{
-        const response = await getProfileService(req.user)
-        console.log(response)
-        res.json()
+        const data = await getProfileService(req.user)
+        console.log(data)
     }
     catch(err){
         next(err)

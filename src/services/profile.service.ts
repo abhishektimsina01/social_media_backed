@@ -43,7 +43,3 @@ export const getProfileService = async(data : {id : number, gmail : string, role
         throw err
     }
 }
-
-export const deletePost = () => {
-
-}

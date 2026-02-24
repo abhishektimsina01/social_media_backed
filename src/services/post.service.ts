@@ -31,7 +31,6 @@ const createPostSerive = async(data : post, user : any) => {
             where : {user_id : user.id},
             relations : ["posts"]
         })
-
         if(!userInfo){
             const err = {
                 success : false,
@@ -40,7 +39,6 @@ const createPostSerive = async(data : post, user : any) => {
             }
             throw err
         }
-
         console.log(userInfo)
         const content  = data?.content
         const media = data?.media
@@ -55,7 +53,7 @@ const createPostSerive = async(data : post, user : any) => {
             media : media,
             feeling : feeling,
             privacy : privacy, 
-            user : userInfo.user_id,
+            user : userInfo,
         })
 
         if(tagged_id){
@@ -75,4 +73,41 @@ const createPostSerive = async(data : post, user : any) => {
     }
 }
 
-export {createPostSerive}
+const deletePostService = async(postId : number, data : any) => {
+    try{
+        console.log(postId, data)
+        const postRepo = AppDataSource.getRepository(Post)
+        const post = await postRepo.findOne({
+            where : {post_id : postId},
+            select : {
+                user : {
+                    user_id : true,
+                    username : true,
+                    created_at : true
+                },
+                profiles : {
+                    user_id : true,
+                    username : true,
+                    gmail : true
+                }
+            },
+            relations : ["user", "profiles"]
+        })
+        console.log("", post)
+        return post
+    }
+    catch(err){
+        throw err
+    }
+}
+
+const editPostService = (postId : number, ) => {
+    try{
+
+    }
+    catch(err){
+        throw err
+    }
+}
+
+export {createPostSerive, deletePostService, editPostService}
