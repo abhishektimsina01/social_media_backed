@@ -1,4 +1,4 @@
-import { Code, In } from "typeorm";
+import { In} from "typeorm";
 import { AppDataSource } from "../database/DataSource.js";
 import { Post } from "../database/Entity/post.entity.js";
 import Profiles from "../database/Entity/profile.entity.js";
@@ -45,6 +45,7 @@ const createPostSerive = async(data : post, user : any) => {
         const feeling = data?.feeling
         const privacy = data?.privacy ?? "user"
         const tagged_id = data?.tagged
+        console.log(content, media, feeling, privacy)
         console.log(tagged_id)
 
         const postRepo = AppDataSource.getRepository(Post)
@@ -102,9 +103,46 @@ const deletePostService = async(postId : number, data : any) => {
     }
 }
 
-const editPostService = (postId : number, ) => {
+const editPostService = async(postId : number, updateTo : post) => {
     try{
-
+        console.log(postId)
+        console.log(updateTo)
+        const postRepo = AppDataSource.getRepository(Post)
+        const post = await postRepo.findOne({
+            where : {post_id : postId},
+        })
+        if(!post){
+            const err = {
+                success : true,
+                name : "No post found",
+                message : "there was no post found."
+            }
+            throw err
+        }
+        if(updateTo.content == updateTo.media == undefined){
+            const err = {
+                success : false,
+                name : "Must contain atleast content or media",
+                message : "Must contain the content or media"
+            }
+            throw err
+        }
+        post.content = updateTo?.content ?? post.content
+        post.media = updateTo?.media ?? post.content
+        post.feeling = updateTo?.feeling ?? post.feeling
+        post.privacy = updateTo?.privacy ?? post.privacy
+        if (updateTo.tagged){
+            const users = await AppDataSource.getRepository(Profiles).find({
+                where : {user_id : In([...updateTo.tagged])},
+                select : {
+                    user_id : true,
+                    username : true
+                }
+            })
+            post.profiles.push(...users)
+        }
+        await postRepo.save(post)
+        return post
     }
     catch(err){
         throw err

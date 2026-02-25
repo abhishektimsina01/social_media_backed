@@ -7,7 +7,7 @@ class Post{
     @PrimaryGeneratedColumn()
     post_id !: number
 
-    @Column({type : "varchar", length : 200})
+    @Column({type : "varchar", length : 200, default : null})
     content !: string
 
     @Column({type : "enum",enum : ["happy", "sad", "angry", "wow"], nullable : true})
