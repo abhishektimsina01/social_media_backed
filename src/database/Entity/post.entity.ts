@@ -1,6 +1,5 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import Profiles from "./profile.entity.js";
-import { Tagged } from "./ManyToManyRelationship/post_profile.entity.js";
 
 @Entity()
 class Post{

@@ -26,7 +26,7 @@ class Profiles{
     @OneToMany(() => Post, (post) => post.user)
     posts !: Post[]
 
-    @ManyToMany(() =>  Post, (post)=> post.profiles)
+    @ManyToMany(() =>  Post, (post)=> post.profiles, {onDelete : "CASCADE"})
     tagged_post !: Post[]
 
     @CreateDateColumn()

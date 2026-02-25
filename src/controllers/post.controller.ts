@@ -3,7 +3,6 @@
 import { NextFunction, Request, Response } from "express";
 import { post } from "../interface/interface.js";
 import { createPostSerive, deletePostService } from "../services/post.service.js";
-import { number } from "joi";
 
 export const createPost = async(req : Request, res : Response, next : NextFunction) => {
     try{
@@ -24,11 +23,7 @@ export const createPost = async(req : Request, res : Response, next : NextFuncti
 export const removePost = async(req : Request, res : Response, next : NextFunction) => {
     try{
         const response = await deletePostService(Number(req.params.post_id), req.user)
-        res.json({
-            success : true,
-            name : "Post Removed",
-            message : "Post was remove from the database"
-        })
+        res.json(response)
     }
     catch(err){
         throw err

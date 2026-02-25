@@ -8,7 +8,7 @@ const postRouter = express.Router()
 // `postRouter.get("/getAllOwnPost")
 // postRouter.get("/getAllOtherPost")
 // postRouter.get("/getOnePost/:post_id")
-postRouter.get("/deletePost/:post_id", removePost)
+postRouter.delete("/deletePost/:post_id",authentication, authorization("user"), removePost)
 // postRouter.patch("/editPost/:post_id")
 // postRouter.get("/likePost/:post_id")`
 postRouter.post("/createPost", authentication, authorization("user"), createPost)

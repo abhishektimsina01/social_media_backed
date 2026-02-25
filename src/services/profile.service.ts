@@ -13,14 +13,16 @@ export const getProfileService = async(data : {id : number, gmail : string, role
                 username : true,
                 name : true,
                 created_at : true,
-                posts :{
+                posts : {
                     post_id : true,
                     content : true,
-                    // profiles : {
-                    //     user_id : true,
-                    //     username : true
-                    // }
-                }, 
+                    cretaed_at : true,
+                    updated_at : true,
+                    profiles : {
+                        user_id : true,
+                        username : true
+                    }
+                },
                 tagged_post : {
                     post_id : true,
                     content : true,

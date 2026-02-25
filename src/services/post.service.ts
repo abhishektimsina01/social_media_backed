@@ -93,7 +93,8 @@ const deletePostService = async(postId : number, data : any) => {
             },
             relations : ["user", "profiles"]
         })
-        console.log("", post)
+        await postRepo.delete(postId)
+        console.log("deleted post: ", post)
         return post
     }
     catch(err){
