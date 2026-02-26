@@ -45,3 +45,13 @@ export const getProfileService = async(data : {id : number, gmail : string, role
         throw err
     }
 }
+
+
+export const followProfileServices = async(userId : number) => {
+    try{
+        return "done"
+    }
+    catch(err){
+        throw err
+    }
+}

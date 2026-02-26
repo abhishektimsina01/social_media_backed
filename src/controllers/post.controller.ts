@@ -34,8 +34,6 @@ export const removePost = async(req : Request, res : Response, next : NextFuncti
     }
 }
 
-// view likes (based on reaction)
-
 // edit post
 export const editPost = async(req : Request, res : Response, next : NextFunction) => {
     try{
@@ -50,6 +48,3 @@ export const editPost = async(req : Request, res : Response, next : NextFunction
         next(err)
     }
 }
-
-// like post
-
