@@ -2,7 +2,7 @@ import { In} from "typeorm";
 import { AppDataSource } from "../database/DataSource.js";
 import { Post } from "../database/Entity/post.entity.js";
 import Profiles from "../database/Entity/profile.entity.js";
-import { post, User } from "../interface/interface.js";
+import { Comment, post, User } from "../interface/interface.js";
 import { Comments } from "../database/Entity/comments.entity.js";
 
 
@@ -207,7 +207,7 @@ const likePostServices = async(postId : number, data : any) => {
     }
 }
 
-const addCommentServices = async(postId : number, data : any, contnet : {content : string}) => {
+const addCommentServices = async(postId : number, data : any, contnet : Comment) => {
     try{
 
         if(!contnet){
@@ -246,6 +246,7 @@ const addCommentServices = async(postId : number, data : any, contnet : {content
 
         const com = commentRepo.create({
             comment : contnet.content,
+            isHidden : contnet.isHidden,
             user : user,
             post : post
         })

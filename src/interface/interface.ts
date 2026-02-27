@@ -28,5 +28,9 @@ interface User{
     exp ?: Timestamp
 }
 
+interface Comment{
+    content : string,
+    isHidden : boolean
+}
 
-export {logIn, signUp, post, User}
+export {logIn, signUp, post, User, Comment}
