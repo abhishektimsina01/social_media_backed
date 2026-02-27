@@ -1,9 +1,10 @@
 import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import { fetch } from "./env.utils.js"
+import { User } from "../interface/interface.js"
 dotenv.config()
 
-const sign = (data : {id : number, gmail : string, role : string}) => {
+const sign = (data : User) => {
     console.log(data)
     const secret_key = fetch('secret_key')
     console.log(secret_key)

@@ -2,7 +2,8 @@ import { In} from "typeorm";
 import { AppDataSource } from "../database/DataSource.js";
 import { Post } from "../database/Entity/post.entity.js";
 import Profiles from "../database/Entity/profile.entity.js";
-import { post } from "../interface/interface.js";
+import { post, User } from "../interface/interface.js";
+import { threadCpuUsage } from "node:process";
 
 
 const createPostSerive = async(data : post, user : any) => {
@@ -149,4 +150,61 @@ const editPostService = async(postId : number, updateTo : post) => {
     }
 }
 
-export {createPostSerive, deletePostService, editPostService}
+const likePostServices = async(postId : number, data : User) => {
+    try{
+        console.log(postId, data)
+        const userRepo = AppDataSource.getRepository(Profiles)
+        const user = await userRepo.findOne({
+            where : {user_id : data.id},
+            // select : {
+            //     user_id : true,
+            //     username : true,
+            //     gmail : true
+            // }
+        })
+        const postRepo = AppDataSource.getRepository(Post)
+        const post = await postRepo.findOne({
+            where : {post_id : postId},
+            select : {
+                post_id : true,
+                content : true,
+                feeling : true,
+                privacy : true,
+                profiles : {
+                    user_id : true,
+                    username : true,
+                    gmail : true
+                },
+                likes : {
+                    user_id : true,
+                    username : true,
+                    gmail : true
+                },
+                user : {
+                    user_id : true,
+                    username : true,
+                    gmail : true
+                }
+            },
+            relations : [ 'user', 'likes', 'profiles']
+        })
+        if(!user || !post){
+            const err = {
+                success : false,
+                name : "not found",
+                message : "no user or post was found"
+            }
+            throw user
+        }
+        console.log(post)
+        console.log(user)
+        post.likes.push(user)
+        await postRepo.save(post)
+        return post
+    }
+    catch(err){
+        throw err
+    }
+}
+ 
+export {createPostSerive, deletePostService, editPostService, likePostServices}

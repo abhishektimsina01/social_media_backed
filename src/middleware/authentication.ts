@@ -1,5 +1,6 @@
 import { Request, Response, NextFunction } from "express"
 import { verify } from "../utils/jwt.utils.js"
+import { User } from "../interface/interface.js"
 
 const authentication = async(req : Request, res : Response, next : NextFunction) => {
     try{

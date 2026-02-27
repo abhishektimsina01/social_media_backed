@@ -2,7 +2,7 @@
 // post as page
 import { NextFunction, Request, Response } from "express";
 import { post } from "../interface/interface.js";
-import { createPostSerive, deletePostService, editPostService } from "../services/post.service.js";
+import { createPostSerive, deletePostService, editPostService, likePostServices } from "../services/post.service.js";
 
 export const createPost = async(req : Request, res : Response, next : NextFunction) => {
     try{
@@ -42,6 +42,21 @@ export const editPost = async(req : Request, res : Response, next : NextFunction
         console.log(response)
         res.json({
             success : true
+        })
+    }
+    catch(err){
+        next(err)
+    }
+}
+
+export const likePost = async(req : Request, res : Response, next : NextFunction) => {
+    try{ 
+        console.log(req.params.postId)
+        const response = await likePostServices(Number(req.params.postId), req.user)
+        res.json({
+            success : true, 
+            message : "the user liked the post",
+            name : "liked"
         })
     }
     catch(err){

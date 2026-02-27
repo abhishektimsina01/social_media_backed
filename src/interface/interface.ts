@@ -1,3 +1,4 @@
+import { Timestamp } from "typeorm"
 
 interface logIn{
     gmail : string
@@ -20,10 +21,12 @@ interface post{
 }
 
 interface User{
-    id : number,
-    gmail : string,
-    role : string
+    id ?: number,
+    gmail ?: string,
+    role ?: string,
+    iat ?: Timestamp,
+    exp ?: Timestamp
 }
 
 
-export {logIn, signUp, post}
+export {logIn, signUp, post, User}

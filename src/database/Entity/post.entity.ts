@@ -1,5 +1,6 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import Profiles from "./profile.entity.js";
+import Joi from "joi";
 
 @Entity()
 class Post{
@@ -36,6 +37,20 @@ class Post{
         }
     })
      profiles !: Profiles[]
+    
+     @ManyToMany(() => Profiles, (profile) => profile.likes)
+     @JoinTable({
+        name : "user_like_post",
+        joinColumn : {
+            name : "post_id",
+            referencedColumnName : "post_id"
+        },
+        inverseJoinColumn : {
+            name : "user_id",
+            referencedColumnName : "user_id"
+        }
+     })
+     likes !: Profiles[]
 
     @CreateDateColumn()
     cretaed_at !: Date

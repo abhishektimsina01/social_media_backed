@@ -29,6 +29,9 @@ class Profiles{
     @ManyToMany(() =>  Post, (post)=> post.profiles, {onDelete : "CASCADE"})
     tagged_post !: Post[]
 
+    @ManyToMany(() => Post, (post) => post.likes)
+    likes !: Post[]
+
     @CreateDateColumn()
     created_at !: Date
 }
