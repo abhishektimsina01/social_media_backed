@@ -2,6 +2,7 @@ import "reflect-metadata"
 import {DataSource} from "typeorm"
 import Profiles from "./Entity/profile.entity.js"
 import { Post } from "./Entity/post.entity.js"
+import { Comments } from "./Entity/comments.entity.js"
 
 
 const AppDataSource = new DataSource({
@@ -13,7 +14,7 @@ const AppDataSource = new DataSource({
     database : "social_media",
     synchronize : true,
     // logging : true,
-    entities : [Profiles, Post]
+    entities : [Profiles, Post, Comments]
 })
 
 export {AppDataSource}

@@ -1,6 +1,7 @@
 import { Column, CreateDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import Profiles from "./profile.entity.js";
 import Joi from "joi";
+import { Comments } from "./comments.entity.js";
 
 @Entity()
 class Post{
@@ -23,6 +24,9 @@ class Post{
     @ManyToOne(()=>Profiles, (profile) => profile.posts, {onDelete : "CASCADE"})
     @JoinColumn()
     user !: Profiles
+
+    @OneToMany(() => Comments, (comment) => comment.post)
+    comments !: Comments[]
 
     @ManyToMany(() => Profiles, (profile) => profile.tagged_post)
     @JoinTable({

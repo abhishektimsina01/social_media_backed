@@ -2,7 +2,7 @@
 // post as page
 import { NextFunction, Request, Response } from "express";
 import { post } from "../interface/interface.js";
-import { createPostSerive, deletePostService, editPostService, likePostServices } from "../services/post.service.js";
+import { addCommentServices, createPostSerive, deletePostService, editPostService, likePostServices } from "../services/post.service.js";
 
 export const createPost = async(req : Request, res : Response, next : NextFunction) => {
     try{
@@ -57,6 +57,22 @@ export const likePost = async(req : Request, res : Response, next : NextFunction
             success : true, 
             message : "the user liked the post",
             name : "liked"
+        })
+    }
+    catch(err){
+        next(err)   
+    }
+}
+
+export const addComment = async(req : Request, res : Response, next : NextFunction) => {
+    try{
+        console.log(req.params.postId)
+        const response = await addCommentServices(Number(req.params.postId), req.user, req.body)
+        console.log(response)
+        res.json({
+            success : true,
+            message : "the user has commented in the post",
+            name : "comment added"
         })
     }
     catch(err){

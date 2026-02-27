@@ -1,5 +1,6 @@
-import {Column, CreateDateColumn, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import {Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { Post } from "./post.entity.js";
+import { Comments } from "./comments.entity.js";
 
 
 @Entity()
@@ -25,6 +26,9 @@ class Profiles{
 
     @OneToMany(() => Post, (post) => post.user)
     posts !: Post[]
+
+    @OneToMany(() => Comments, (comment) => comment.user)
+    comments !: Comments[]
 
     @ManyToMany(() =>  Post, (post)=> post.profiles, {onDelete : "CASCADE"})
     tagged_post !: Post[]

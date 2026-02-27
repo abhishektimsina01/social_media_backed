@@ -3,7 +3,7 @@ import { AppDataSource } from "../database/DataSource.js";
 import { Post } from "../database/Entity/post.entity.js";
 import Profiles from "../database/Entity/profile.entity.js";
 import { post, User } from "../interface/interface.js";
-import { threadCpuUsage } from "node:process";
+import { Comments } from "../database/Entity/comments.entity.js";
 
 
 const createPostSerive = async(data : post, user : any) => {
@@ -150,7 +150,7 @@ const editPostService = async(postId : number, updateTo : post) => {
     }
 }
 
-const likePostServices = async(postId : number, data : User) => {
+const likePostServices = async(postId : number, data : any) => {
     try{
         console.log(postId, data)
         const userRepo = AppDataSource.getRepository(Profiles)
@@ -206,5 +206,56 @@ const likePostServices = async(postId : number, data : User) => {
         throw err
     }
 }
- 
-export {createPostSerive, deletePostService, editPostService, likePostServices}
+
+const addCommentServices = async(postId : number, data : any, contnet : {content : string}) => {
+    try{
+
+        if(!contnet){
+            const err = {
+                success : false,
+                name : "must send comment"
+            }
+            throw err
+        }
+        const userRepo = AppDataSource.getRepository(Profiles)
+        const postRepo = AppDataSource.getRepository(Post)
+        const commentRepo = AppDataSource.getRepository(Comments)
+
+        const user = await userRepo.findOne({
+            where : {user_id : data.id},
+            select : {
+                user_id : true,
+                username : true,
+                gmail : true
+            }
+        })
+        console.log(user)
+
+        const post = await postRepo.findOne({
+            where : {post_id : postId},
+        })
+
+        if(!user || !post){
+            const err = {
+                success : false,
+                name : "not found",
+                message : "not found"
+            }
+            throw err
+        }
+
+        const com = commentRepo.create({
+            comment : contnet.content,
+            user : user,
+            post : post
+        })
+
+        await commentRepo.save(com)
+        return com
+    }
+    catch(err){
+        throw err
+    }
+}
+
+export {createPostSerive, deletePostService, editPostService, likePostServices, addCommentServices}
