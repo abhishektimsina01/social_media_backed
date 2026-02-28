@@ -20,7 +20,7 @@ export const getProfile = async(req : Request, res : Response, next : NextFuncti
 export const followProfile = async(req : Request, res : Response, next : NextFunction) => {
     try{
         const userId = req.params.userId
-        const response = await followProfileServices(Number(userId))
+        const response = await followProfileServices(Number(userId), req.user)
         console.log(response)
         res.json({
             success : true, 

@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken"
 import dotenv from "dotenv"
 import { fetch } from "./env.utils.js"
 import { User } from "../interface/interface.js"
+import { Err } from "joi"
 dotenv.config()
 
 const sign = (data : User) => {
@@ -17,7 +18,7 @@ const sign = (data : User) => {
     return token
 }
 
-const verify = (token : string) => {
+const verify = (token : string): User | Error => {
     // there can be various kind of error like, exipre, invalid or notfound
     try{
         const secret_key = fetch('secret_key')
@@ -25,12 +26,12 @@ const verify = (token : string) => {
             const error = new Error("Secret key not found")
             return error
         }
-        const data = jwt.verify(token, secret_key)
+        const data = jwt.verify(token, secret_key) as User
         console.log("the token data is", data)
         return data
     }
     catch(err){
-        return err
+        throw err
     }
 }
 

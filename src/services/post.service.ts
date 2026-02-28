@@ -6,7 +6,7 @@ import { Comment, post, User } from "../interface/interface.js";
 import { Comments } from "../database/Entity/comments.entity.js";
 
 
-const createPostSerive = async(data : post, user : any) => {
+const createPostSerive = async(data : post, user : User) => {
     try{
         console.log(data, user)
         if(!data){
@@ -75,7 +75,7 @@ const createPostSerive = async(data : post, user : any) => {
     }
 }
 
-const deletePostService = async(postId : number, data : any) => {
+const deletePostService = async(postId : number, data : User) => {
     try{
         console.log(postId, data)
         const postRepo = AppDataSource.getRepository(Post)
@@ -150,7 +150,7 @@ const editPostService = async(postId : number, updateTo : post) => {
     }
 }
 
-const likePostServices = async(postId : number, data : any) => {
+const likePostServices = async(postId : number, data : User) => {
     try{
         console.log(postId, data)
         const userRepo = AppDataSource.getRepository(Profiles)
@@ -207,7 +207,7 @@ const likePostServices = async(postId : number, data : any) => {
     }
 }
 
-const addCommentServices = async(postId : number, data : any, contnet : Comment) => {
+const addCommentServices = async(postId : number, data : User, contnet : Comment) => {
     try{
 
         if(!contnet){

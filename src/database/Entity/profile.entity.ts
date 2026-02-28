@@ -1,6 +1,7 @@
 import {Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
 import { Post } from "./post.entity.js";
 import { Comments } from "./comments.entity.js";
+import { Followers } from "./followers.entity.js";
 
 
 @Entity()
@@ -26,6 +27,14 @@ class Profiles{
 
     @OneToMany(() => Post, (post) => post.user)
     posts !: Post[]
+
+    //user le follow gareko id
+    @OneToMany(() => Followers, (follow) => follow.followed_id)
+    following !: Followers[]
+
+    //user lai follow gareko id
+    @OneToMany(() => Followers, (follow) => follow.follower_id)
+    followers !: Followers[]
 
     @OneToMany(() => Comments, (comment) => comment.user)
     comments !: Comments[]

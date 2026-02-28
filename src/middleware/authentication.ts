@@ -1,6 +1,8 @@
 import { Request, Response, NextFunction } from "express"
 import { verify } from "../utils/jwt.utils.js"
 import { User } from "../interface/interface.js"
+import { AppDataSource } from "../database/DataSource.js"
+import Profiles from "../database/Entity/profile.entity.js"
 
 const authentication = async(req : Request, res : Response, next : NextFunction) => {
     try{
@@ -15,7 +17,11 @@ const authentication = async(req : Request, res : Response, next : NextFunction)
             throw data
         }
         // yedi sbaai kura fine xa vhane
-        req.user  = data
+        req.user = data
+        if(!req.user){
+            const err = new Error("nothing in req.user")
+            throw err
+        }
         console.log(req.user)
         console.log("authenticatipon finished")
         next()

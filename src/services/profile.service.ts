@@ -1,8 +1,10 @@
 import { AppDataSource } from "../database/DataSource.js"
+import { Followers } from "../database/Entity/followers.entity.js"
 import Profiles from "../database/Entity/profile.entity.js"
+import { User } from "../interface/interface.js"
 
 
-export const getProfileService = async(data : {id : number, gmail : string, role : string}) => {
+export const getProfileService = async(data : User) => {
     try{
         const userRepo = AppDataSource.getRepository(Profiles)
         const profile = await userRepo.findOne({
@@ -47,9 +49,45 @@ export const getProfileService = async(data : {id : number, gmail : string, role
 }
 
 
-export const followProfileServices = async(userId : number) => {
+export const followProfileServices = async(userId : number, data : User) => {
     try{
-        return "done"
+        const followRepo = AppDataSource.getRepository(Followers)
+        const userRepo = AppDataSource.getRepository(Profiles)
+        const follower = await userRepo.findOne({
+            where : { user_id : data.id},
+            select : {
+                user_id : true,
+                username : true, 
+                gmail : true
+            }
+        })
+        
+        const followedTo = await userRepo.findOne({
+            where : {user_id : userId},
+            select : {
+                user_id : true,
+                username : true,
+                gmail : true
+            }
+        })
+
+        if(!follower || !followedTo){
+            const err = {
+                success : false,
+                name : "not found",
+                message : "the user was not found"
+            }
+            throw err
+        }
+
+        const follow = followRepo.create({
+            follower_id : follower,
+            followed_id : followedTo
+        })
+
+        console.log(follow)
+        await followRepo.save(follow)
+        return follow
     }
     catch(err){
         throw err

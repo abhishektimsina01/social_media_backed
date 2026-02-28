@@ -16,18 +16,6 @@ const app : Application = express()
 const server = http.createServer(app)
 const io = new Server(server)
 
-io.use((socket, next) => {
-    console.log("socket in middleware")
-    next()
-})
-
-io.on("connection", (socket) => {
-
-    socket.on("disconnect", () => {
-        console.log("socket disconnected")
-    })
-})
-
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
@@ -38,8 +26,21 @@ app.use("/api/post", postRouter)
 // app.use("/api/comment")
 // app.use("/api/post")
 // app.use("/api/notify")
-
 app.use(notFound)
 app.use(errorHandler)
+
+//middleware
+//hamile ya bata cookies and other credentials haru access garna milxa
+io.use((socket, next) => {
+    console.log("socket in middleware")
+    next()
+})
+
+io.on("connection", (socket) => {
+    socket.on("disconnect", () => {
+        console.log("socket disconnected")
+    })
+})
+
 
 export default server
