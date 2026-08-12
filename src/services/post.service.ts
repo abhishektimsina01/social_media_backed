@@ -209,7 +209,6 @@ const likePostServices = async(postId : number, data : User) => {
 
 const addCommentServices = async(postId : number, data : User, contnet : Comment) => {
     try{
-
         if(!contnet){
             const err = {
                 success : false,

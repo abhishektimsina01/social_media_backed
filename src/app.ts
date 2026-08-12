@@ -8,6 +8,7 @@ import { authRouter } from "./routes/auth.routes.js"
 import { errorHandler, notFound } from "./middleware/errorHandler.middleware.js"
 import { postRouter } from "./routes/post.route.js"
 import { profileRouter } from "./routes/user.route.js"
+import limiter from "./config/rateLimiting.js"
 
 
 dotenv.config()
@@ -16,6 +17,7 @@ const app : Application = express()
 const server = http.createServer(app)
 const io = new Server(server)
 
+app.use(limiter)
 app.use(cookieParser())
 app.use(express.json())
 app.use(express.urlencoded({extended : true}))
@@ -44,3 +46,4 @@ io.on("connection", (socket) => {
 
 
 export default server
+export {io}
