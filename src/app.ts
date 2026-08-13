@@ -1,49 +1,8 @@
-import express from "express"
-import http from "http"
-import {Server} from "socket.io"
-import dotenv from "dotenv"
-import cookieParser from "cookie-parser"
 import {Application } from "express"
-import { authRouter } from "./routes/auth.routes.js"
-import { errorHandler, notFound } from "./middleware/errorHandler.middleware.js"
-import { postRouter } from "./routes/post.route.js"
-import { profileRouter } from "./routes/user.route.js"
-import limiter from "./config/rateLimiting.js"
+import { Midlleware } from "./middleware/server.middleware.js"
+import { RoutesRegistration } from "./routes/server.route.js"
 
-
-dotenv.config()
-
-const app : Application = express()
-const server = http.createServer(app)
-const io = new Server(server)
-
-app.use(limiter)
-app.use(cookieParser())
-app.use(express.json())
-app.use(express.urlencoded({extended : true}))
-
-app.use("/api/auth", authRouter)
-app.use("/api/profile", profileRouter)
-app.use("/api/post", postRouter)
-// app.use("/api/comment")
-// app.use("/api/post")
-// app.use("/api/notify")
-app.use(notFound)
-app.use(errorHandler)
-
-//middleware
-//hamile ya bata cookies and other credentials haru access garna milxa
-io.use((socket, next) => {
-    console.log("socket in middleware")
-    next()
-})
-
-io.on("connection", (socket) => {
-    socket.on("disconnect", () => {
-        console.log("socket disconnected")
-    })
-})
-
-
-export default server
-export {io}
+export const appConfiguration = (app : Application) => {
+    Midlleware(app)
+    RoutesRegistration(app)
+}
