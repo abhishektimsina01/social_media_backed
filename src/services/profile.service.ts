@@ -2,37 +2,13 @@ import { AppDataSource } from "../database/DataSource.js"
 import { Followers } from "../database/Entity/followers.entity.js"
 import Profiles from "../database/Entity/profile.entity.js"
 import { User } from "../interface/interface.js"
+import { ProfileRepository } from "../repository/profile.repository.js"
 
-
-export const getProfileService = async(data : User) => {
+const profile = new ProfileRepository()
+export const getProfileService = async(user_id : number) => {
     try{
-        const userRepo = AppDataSource.getRepository(Profiles)
-        const profile = await userRepo.findOne({
-            where : {user_id : data.id},
-            relations : ["posts", "tagged_post", "posts.profiles"],
-            select : {
-                user_id : true,
-                username : true,
-                name : true,
-                created_at : true,
-                posts : {
-                    post_id : true,
-                    content : true,
-                    cretaed_at : true,
-                    updated_at : true,
-                    profiles : {
-                        user_id : true,
-                        username : true
-                    }
-                },
-                tagged_post : {
-                    post_id : true,
-                    content : true,
-                    feeling : true
-                }
-            }
-        })
-        if(!profile){
+        const user = await profile.getProfile(user_id)
+        if(!user){
             const err = {
                 success : false, 
                 name : "not found",
@@ -40,8 +16,7 @@ export const getProfileService = async(data : User) => {
             }
             throw err
         }
-        console.log("the profile is", profile)
-        return profile
+        return user
     }
     catch(err){
         throw err

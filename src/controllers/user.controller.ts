@@ -8,7 +8,9 @@ import { followProfileServices, getProfileService } from "../services/profile.se
 
 export const getProfile = async(req : Request, res : Response, next : NextFunction) => {
     try{
-        const data = await getProfileService(req.user)
+        console.log("===========================")
+        const id : number = req.user.id
+        const data = await getProfileService(id)
         console.log(data)
         res.json(data)
     }

@@ -4,6 +4,7 @@ import { AppDataSource } from "./database/DataSource.js"
 import { appConfiguration } from "./app.js"
 import { start } from "node:repl"
 import dotenv from "dotenv"
+import { fetch } from "./utils/env.utils.js"
 dotenv.config()
 
 const startServer = async () : Promise<void> => {
@@ -11,7 +12,7 @@ const startServer = async () : Promise<void> => {
     AppDataSource.initialize().then(() => {
         console.log("database connected successfully✅")
         appConfiguration(app)
-        app.listen(process.env.port, (err) => {
+        app.listen(fetch("port"), (err) => {
             if(err){
                 console.log("error has occurred")
             }

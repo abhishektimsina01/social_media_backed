@@ -33,7 +33,7 @@ const authSigniUp = async(req : Request, res : Response, next :NextFunction) => 
             httpOnly : true,
             secure : true,
             sameSite : "strict",
-            maxAge : 24 * 60 * 60
+            maxAge : 1000 * 60* 60 * 24
         }).json({
             success : true,
             message : "Signed Up",
@@ -49,9 +49,7 @@ const authSigniUp = async(req : Request, res : Response, next :NextFunction) => 
 const authLogout = async(req : Request, res : Response, next : NextFunction) => {
     try{
         //for logout we need to find the token
-        console.log(req.cookies)
         const token = req.cookies.accessToken
-        console.log(token)
         res.clearCookie("accessToken").json({
             success : true,
             message : "Logged Out",

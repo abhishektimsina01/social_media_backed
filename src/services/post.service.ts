@@ -220,7 +220,7 @@ const addCommentServices = async(postId : number, data : User, contnet : Comment
         const postRepo = AppDataSource.getRepository(Post)
         const commentRepo = AppDataSource.getRepository(Comments)
 
-        const user = await userRepo.findOne({
+       const user = await userRepo.findOne({
             where : {user_id : data.id},
             select : {
                 user_id : true,

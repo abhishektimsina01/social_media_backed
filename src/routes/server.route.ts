@@ -1,7 +1,7 @@
-import { authRouter } from "../routes/auth.routes.js"
+import { authRouter } from "./auth.routes.js"
 import { errorHandler, notFound } from "../middleware/errorHandler.middleware.js"
-import { postRouter } from "../routes/post.route.js"
-import { profileRouter } from "../routes/user.route.js"
+import { postRouter } from "./post.route.js"
+import { profileRouter } from "./user.route.js"
 import { Application } from "express"
 
 

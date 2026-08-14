@@ -1,10 +1,11 @@
 import { logIn, signUp } from "../interface/interface.js"
 import { loginSchema, signupSchema } from "../validations/allValidation.js"
-import { AppDataSource } from "../database/DataSource.js"
 import { ApiError } from "../interface/error.interface.js"
 import {sign} from "../utils/jwt.utils.js"
 import { comparePassword, hashPassword } from "../utils/password.utils.js"
-import Profiles from "../database/Entity/profile.entity.js"
+import {ProfileRepository} from "../repository/profile.repository.js"
+
+const profile = new ProfileRepository()
 
 export const authLoginService = async(data : logIn) => {
     try{
@@ -12,9 +13,7 @@ export const authLoginService = async(data : logIn) => {
         if(error){
             throw(error)
         }
-        //check the gmail if already exist or not
-        const profileRepo = AppDataSource.getRepository(Profiles)
-        const user = await profileRepo.findOne({where : {gmail : data.gmail}})
+        const user = await profile.findUserByEmail(data.gmail)
         console.log("user is", user)
         if(!user){
             const err : ApiError = {
@@ -51,11 +50,7 @@ export const authSignUpService = async(data : signUp) => {
             throw error
         }
         //check if there is any gmail account related to it
-        const profileRepo = AppDataSource.getRepository(Profiles)
-        const user = await profileRepo.findOne({
-            where : {gmail : data.gmail}
-        })
-        console.log(user)
+        const user = await profile.findUserByEmail(data.gmail)
         if(user){
             const err = {
                 name : "Already used gmail",
@@ -67,19 +62,16 @@ export const authSignUpService = async(data : signUp) => {
         //if no user then first of all hash the password
         const hashedPassword = await hashPassword(data.password)
         data.password = hashedPassword
-
         //save the user
-        const newUser = profileRepo.create(data)
-        const response = await profileRepo.save(newUser)
-        console.log(`created user ${response}`)
-
+        const created_user = await profile.createUser(data)
         //after the user is saved we need to make accessToken for the user
-        const token = sign({ id : response.user_id, gmail : response.gmail})
-        return {ress : {
-            id : response.user_id,
-            username : response.username,
-            gmail : response.gmail
-        }, token : token}
+        const response = {
+            id : created_user.user_id,
+            gmail : created_user.gmail,
+            role : created_user.role
+        }
+        const token = sign(response)
+        return {res : response, token : token}
     }
     catch(err){
         throw err

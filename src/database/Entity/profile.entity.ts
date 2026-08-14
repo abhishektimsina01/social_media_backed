@@ -1,4 +1,4 @@
-import {Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import {Column, CreateDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn, Unique, UpdateDateColumn } from "typeorm";
 import { Post } from "./post.entity.js";
 import { Comments } from "./comments.entity.js";
 import { Followers } from "./followers.entity.js";
@@ -42,11 +42,14 @@ class Profiles{
     @ManyToMany(() =>  Post, (post)=> post.profiles, {onDelete : "CASCADE"})
     tagged_post !: Post[]
 
-    @ManyToMany(() => Post, (post) => post.likes)
+    @ManyToMany(() => Post, (post) => post.likes, {onDelete : "CASCADE"})
     likes !: Post[]
 
     @CreateDateColumn()
     created_at !: Date
+
+    @UpdateDateColumn()
+    updated_at !: Date
 }
 
 export default Profiles

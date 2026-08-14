@@ -21,7 +21,7 @@ interface post{
 }
 
 interface User{
-    id ?: number,
+    id : number,
     gmail ?: string,
     role : string,
     iat ?: Timestamp,

@@ -28,7 +28,7 @@ class Post{
     @OneToMany(() => Comments, (comment) => comment.post)
     comments !: Comments[]
 
-    @ManyToMany(() => Profiles, (profile) => profile.tagged_post)
+    @ManyToMany(() => Profiles, (profile) => profile.tagged_post, {onDelete : "CASCADE"})
     @JoinTable({
         name : "tagged_user_post",
         joinColumn : {
@@ -42,7 +42,7 @@ class Post{
     })
      profiles !: Profiles[]
     
-     @ManyToMany(() => Profiles, (profile) => profile.likes)
+     @ManyToMany(() => Profiles, (profile) => profile.likes, {onDelete : "CASCADE"})
      @JoinTable({
         name : "user_like_post",
         joinColumn : {

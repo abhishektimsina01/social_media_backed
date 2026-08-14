@@ -7,7 +7,7 @@ class Followers{
     follow_id !: number
 
     //user jasle follow garxa
-    @ManyToOne(() => Profiles, (profile) => profile.following)
+    @ManyToOne(() => Profiles, (profile) => profile.following, {onDelete : "CASCADE"})
     @JoinColumn({
         name : "follower_id",
         referencedColumnName : "user_id"
@@ -15,7 +15,7 @@ class Followers{
     follower_id !: Profiles
 
     // user jaslai follow gareko hunxa
-    @ManyToOne(() => Profiles, (profile) => profile.followers)
+    @ManyToOne(() => Profiles, (profile) => profile.followers, {onDelete : "CASCADE"})
     @JoinColumn({
         name : "followed_id",
         referencedColumnName : "user_id"
